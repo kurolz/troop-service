@@ -1,11 +1,11 @@
 # Troop
+Troop是运维自动化的底层基础设施，一套完整的服务器集中化管理系统。
 
-## 角色：
-##### 服务端：General
-
-##### 客户端 (Agent)：Scout
-
-##### 命令行工具：Client
+## 需要部署的服务（4）：
+- 服务端：General
+- 客户端（Agent）：Scout
+- 文件服务器：FileManager
+- 命令行工具：Client
 
 ## 安装：
 ### 环境准备：
@@ -32,7 +32,9 @@ cd troop_file_linux_1.0.0_amd64
 # 重启服务
 service troop-scoutd restart
 ```
+
 #### 5.安装General服务(服务端)
+保证服务器必须拥有General配置文件中的plugin-git地址的clone和pull权限，如未填写git地址或无权限拉取，所有Scout的自更新和插件功能将无法使用
 ```
 wget https://github.com/kurolz/troop-service/raw/master/troop_general_linux_1.0.0_amd64.tar.gz
 tar -zxvf troop_general_linux_1.0.0_amd64.tar.gz
@@ -128,7 +130,7 @@ listen = 6858  # 监听的HTTP端口
 token = default-token  # HTTP请求验证token
 
 [file]
-address = http://127.0.0.1:6859  # 文件服务器的连接信息
+address = http://127.0.0.1:6859  # 文件服务器的连接信息，应使用所有Scout都能访问的地址
 
 [log]
 logfile = "general.log"  # 输出日志文件名
@@ -137,7 +139,9 @@ logfile = "general.log"  # 输出日志文件名
 auto_accept = false  # 是否自动接受Scout握手、交换密钥
 
 [plugin]
-git = ssh://git@gitlab.com/troop/plugins/plugin.git  # 插件的git地址
+git = ssh://git@gitlab.com/troop/plugins/plugin.git  
+# 插件的git地址，保证服务器必须拥有此git地址的clone和pull权限，
+# 如不填写或无权限拉取，所有Scout的自更新和插件功能将无法使用
 ```
 
 #### Scout（Agent）
