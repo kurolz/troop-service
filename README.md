@@ -1,6 +1,8 @@
 # Troop
 Troop是运维自动化的底层基础设施，一套完整的服务器集中化管理系统。
 
+[基础架构图](https://www.processon.com/view/link/5dc23dace4b04913a28be048)
+
 ## 需要部署的服务（4）：
 - 服务端：General
 - 客户端（Agent）：Scout
