@@ -1,5 +1,5 @@
 # Troop
-Troop是运维自动化的底层基础设施，一套完整的服务器集中化管理系统。
+Troop是由Golang编写的运维自动化底层基础设施，一套完整的服务器集中化管理系统。
 
 [基础架构图](https://www.processon.com/view/link/5dc23dace4b04913a28be048)
 
