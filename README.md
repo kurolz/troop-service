@@ -21,7 +21,7 @@ yum install -y mysql-server
 #### 3.安装RabbitMQ
 ```
 docker pull rabbitmq:management
-docker run -d --hostname my-rabbit -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 --name rabbitmq rabbitmq:management
+docker run -d --hostname my-rabbit --restart=always -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 --name rabbitmq rabbitmq:management
 ```
 #### 4.安装File服务(文件服务)
 ```
