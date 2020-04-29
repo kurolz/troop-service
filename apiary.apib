@@ -1,0 +1,548 @@
+FORMAT: 2A
+HOST: http://troop.com:6858
+
+# Troop
+
+Troop是基于Golang编写的运维自动化底层基础设施，一套完整的服务器集中化管理系统。
+
+## 主机列表 [/host/keys]
+
+### 获取主机列表 [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+            Http-Token: default-token
+
++ Response 200 (application/json)
+
+        {
+            "Accepted": [
+                "server-1",
+                "server-2"
+            ],
+            "Unaccepted": [
+                "server-3",
+                "server-4"
+            ],
+            "Denied": [
+                "server-5",
+                "server-6"
+            ]
+        }
+
+## 主机详细列表 [/hosts]
+
+### 获取主机详细列表 [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            Http-Token: default-token
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": {
+                    "Accepted": [
+                        {
+                            "ID": 1,
+                            "CreatedAt": "2020-02-28T08:41:16Z",
+                            "UpdatedAt": "2020-02-28T08:41:25Z",
+                            "DeletedAt": null,
+                            "Hostname": "server-1",
+                            "Ip": "192.168.72.127",
+                            "OS": "windows",
+                            "Tags": null,
+                            "ScoutVersion": "1.0.0",
+                            "Type": "server",
+                            "Status": "accepted",
+                            "AES": "LC5hN57ik73o7XJiCUIfjGSHMKTkkoaZge5DKzgDiVNxxB3NyAzdePpk67P150c7",
+                            "HandshakeAt": "2020-02-28T08:41:25Z"
+                        },
+                        {
+                            "ID": 2,
+                            "CreatedAt": "2020-02-28T08:44:57Z",
+                            "UpdatedAt": "2020-02-28T08:47:54Z",
+                            "DeletedAt": null,
+                            "Hostname": "server-2",
+                            "Ip": "192.168.72.128",
+                            "OS": "linux",
+                            "Tags": null,
+                            "ScoutVersion": "1.0.0",
+                            "Type": "server",
+                            "Status": "accepted",
+                            "AES": "NTbztH/WvQ+6vByO+Rh5S5b4iQjDENUJWggJkPmSoU60+ofCHCNdTj+Oixy6OKCC",
+                            "HandshakeAt": "2020-02-28T08:47:54Z"
+                        }
+                    ],
+                    "Unaccepted": null,
+                    "Denied": null
+                }
+            }
+
+
+## 主机操作 [/host/]
+
+### 接受指定主机 [POST /host/accept]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "hostname": "server-1"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Accept「server-1」successfully"
+            }
+
+
+### 接受所有主机 [POST /host/accept/all]
+
++ Request (application/json)
+
+    + Headers
+
+            Http-Token: default-token
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Accept「server-1,server-2」successfully"
+            }
+
+
+### 拒绝指定主机 [POST /host/reject]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "hostname": "server-1"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Reject「server-1」successfully"
+            }
+
+
+### 拒绝所有主机 [POST /host/reject/all]
+
++ Request (application/json)
+
+    + Headers
+
+            Http-Token: default-token
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Reject「server-1,server-2」successfully"
+            }
+
+
+### 删除指定主机 [POST /host/delete]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "hostname": "server-1"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Delete「server-1」successfully"
+            }
+
+
+### 删除所有主机 [POST /host/delete/all]
+
++ Request (application/json)
+
+    + Headers
+
+            Http-Token: default-token
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "result": "Delete all scout successfully"
+            }
+
+
+## 执行基础任务 [/]
+
+### 获取任务执行结果 [GET /task]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "task_id": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac",
+                "wait": false
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "bogon": {
+                        "TaskId": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac",
+                        "Scout": "server-1",
+                        "ScoutType": "server",
+                        "Result": "True",
+                        "Error": "",
+                        "Status": "successful"
+                    },
+                    "xieyz-PC": {
+                        "TaskId": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac",
+                        "Scout": "server-2",
+                        "ScoutType": "server",
+                        "Result": "True",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac"
+            }
+
+
+### 检测主机连通性 [POST /ping]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "target": "*",
+                "target_type": "server",
+                "tag": "",
+                "os": "",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "bogon": {
+                        "TaskId": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac",
+                        "Scout": "server-1",
+                        "ScoutType": "server",
+                        "Result": "True",
+                        "Error": "",
+                        "Status": "successful"
+                    },
+                    "xieyz-PC": {
+                        "TaskId": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac",
+                        "Scout": "server-2",
+                        "ScoutType": "server",
+                        "Result": "True",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "MWaeXJrtwl0lojenxrf8jxtCkHt3u6ac"
+            }
+
+
+### 执行命令 [POST /tasks]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "task": [
+                    {
+                        "module": "cmd /c",
+                        "args": "ping 127.0.0.1"
+                    }
+                ],
+                "target": "*",
+                "target_type": "server",
+                "tag": "",
+                "os": "windows",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "xieyz-PC": {
+                        "TaskId": "AoIEQxDkLcs238o17VxZxYEH5ig58iB9",
+                        "Scout": "server-1",
+                        "ScoutType": "server",
+                        "Result": "\r\n正在 Ping 127.0.0.1 具有 32 字节的数据:\r\n来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=128\r\n来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=128\r\n来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=128\r\n来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=128\r\n\r\n127.0.0.1 的 Ping 统计信息:\r\n    数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，\r\n往返行程的估计时间(以毫秒为单位):\r\n    最短 = 0ms，最长 = 0ms，平均 = 0ms\r\n",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "AoIEQxDkLcs238o17VxZxYEH5ig58iB9"
+            }
+
+
+### 文件推送 [POST /file]
+
++ Request (multipart/form-data)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "file_name": "my_script.sh",
+                "file": "(file_byte)",
+                "dest": "/tmp/",
+                "cover": false,
+                "target": "*",
+                "target_type": "server",
+                "tag": "",
+                "os": "linux",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "xieyz-PC": {
+                        "TaskId": "AoIEQxDkLcs238o17VxZxYEH5ig58iB9",
+                        "Scout": "server-2",
+                        "ScoutType": "server",
+                        "Result": "successfully",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "AoIEQxDkLcs238o17VxZxYEH5ig58iB9"
+            }
+
+
+## 文件管理任务 [/file]
+
+### 获取文件列表 [GET]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "action": "ls",
+                "prefix": "/",
+                "target": "server-2",
+                "target_type": "server",
+                "tag": "",
+                "os": "",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "bogon": {
+                        "TaskId": "Fp2cWm7Xhl5VUOfcD0nqnTaMorhStVxC",
+                        "Scout": "server-2",
+                        "ScoutType": "server",
+                        "Result": "[{\"Name\":\"a.sh\",\"Size\":0,\"Type\":\"file\",\"LastModified\":\"2019-11-18T23:20:23.777948019-08:00\"},{\"Name\":\"bin\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-02-24T22:22:57.781546042-08:00\"},{\"Name\":\"boot\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-09-04T21:07:10.729530636-07:00\"},{\"Name\":\"data\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-02-25T17:10:16.52945289-08:00\"},{\"Name\":\"dev\",\"Size\":4280,\"Type\":\"dir\",\"LastModified\":\"2020-03-19T03:45:19.336000169-07:00\"},{\"Name\":\"etc\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-02-26T00:14:48.09293683-08:00\"},{\"Name\":\"home\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-09-04T19:38:09.348161261-07:00\"},{\"Name\":\"initrd.img\",\"Size\":32,\"Type\":\"file\",\"LastModified\":\"2019-08-13T09:22:07.608000666-07:00\"},{\"Name\":\"lib\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-02-20T01:44:24.989188268-08:00\"},{\"Name\":\"lib64\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-09-04T21:05:40.15390942-07:00\"},{\"Name\":\"lost+found\",\"Size\":16384,\"Type\":\"dir\",\"LastModified\":\"2019-08-13T09:21:34-07:00\"},{\"Name\":\"media\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-08-13T09:21:41.960000486-07:00\"},{\"Name\":\"mnt\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2016-04-20T15:08:14-07:00\"},{\"Name\":\"opt\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-03-16T01:24:28.096662163-07:00\"},{\"Name\":\"proc\",\"Size\":0,\"Type\":\"dir\",\"LastModified\":\"2020-03-19T03:45:02.072-07:00\"},{\"Name\":\"root\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-03-19T20:17:47.064053633-07:00\"},{\"Name\":\"run\",\"Size\":860,\"Type\":\"dir\",\"LastModified\":\"2020-03-19T20:06:11.975135585-07:00\"},{\"Name\":\"sbin\",\"Size\":12288,\"Type\":\"dir\",\"LastModified\":\"2019-09-04T21:06:06.076864819-07:00\"},{\"Name\":\"srv\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2016-04-20T15:08:14-07:00\"},{\"Name\":\"ss\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-12-30T01:58:13.202369533-08:00\"},{\"Name\":\"sys\",\"Size\":0,\"Type\":\"dir\",\"LastModified\":\"2020-03-19T20:12:47.610980592-07:00\"},{\"Name\":\"tmp\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2020-03-20T23:12:02.808827725-07:00\"},{\"Name\":\"usr\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-08-13T09:21:40.876000478-07:00\"},{\"Name\":\"var\",\"Size\":4096,\"Type\":\"dir\",\"LastModified\":\"2019-08-13T09:21:41.528000483-07:00\"},{\"Name\":\"vmlinuz\",\"Size\":29,\"Type\":\"file\",\"LastModified\":\"2019-08-13T09:22:07.612000666-07:00\"}]",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "Fp2cWm7Xhl5VUOfcD0nqnTaMorhStVxC"
+            }
+
+
+## 插件任务 [//]
+
+### 插件任务推送 [POST /plugin]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "plugin": "$plugin_name",
+                "action": "",
+                "config_byte": "$file_bytes",
+                "config_name": "$file_name",
+                "args": "",
+                "no_check": false,
+                "target": "server-1",
+                "target_type": "server",
+                "tag": "",
+                "os": "",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "bogon": {
+                        "TaskId": "Z74ezoDS2OqwKqVHmM2Y4fsfKOOjOexw",
+                        "Scout": "server-1",
+                        "ScoutType": "server",
+                        "Result": "successfully",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "Z74ezoDS2OqwKqVHmM2Y4fsfKOOjOexw"
+            }
+
+### 通过插件更新Scout [POST /plugin]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+    + Body
+
+            {
+                "plugin": "scout_manager",
+                "action": "update",
+                "args": "https://github.com/kurolz/troop-service/raw/master/troop_scout_linux_1.0.0_amd64.tar.gz",
+                "no_check": false,
+                "target": "server-2",
+                "target_type": "server",
+                "tag": "",
+                "os": "",
+                "detach": false,
+                "timeout": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": {
+                    "bogon": {
+                        "TaskId": "Z74ezoDS2OqwKqVHmM2Y4fsfKOOjOexw",
+                        "Scout": "server-2",
+                        "ScoutType": "server",
+                        "Result": "successfully",
+                        "Error": "",
+                        "Status": "successful"
+                    }
+                },
+                "task_id": "Z74ezoDS2OqwKqVHmM2Y4fsfKOOjOexw"
+            }
+
+
+### 通知General拉取新插件 [POST /plugin_pull]
+
++ Request (application/json)
+
+    + Headers
+            
+            Http-Token: default-token
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 0,
+                "error": "",
+                "result": "successfully",
+                "task_id": ""
+            }
