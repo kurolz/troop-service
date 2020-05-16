@@ -316,7 +316,9 @@ Troop是基于Golang编写的运维自动化底层基础设施，一套完整的
                 "task": [
                     {
                         "name": "cmd /c",
-                        "args": "ping 127.0.0.1"
+                        "args": "ping 127.0.0.1",
+                        "envs": [{"key": "my_env", "value": "env_value"}],
+                        "dir": "/opt"
                     }
                 ],
                 "target": "*",
