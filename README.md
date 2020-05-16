@@ -40,9 +40,9 @@ service troop-scoutd restart
 #### 5.安装General服务(服务端)
 保证服务器必须拥有General配置文件中的plugin-git地址的clone和pull权限，如未填写git地址或无权限拉取，所有Scout的自更新和插件功能将无法使用
 ```
-wget https://github.com/kurolz/troop-service/raw/master/troop_general_linux_1.0.0_amd64.tar.gz
-tar -zxvf troop_general_linux_1.0.0_amd64.tar.gz
-cd troop_general_linux_1.0.0_amd64
+wget https://github.com/kurolz/troop-service/raw/master/troop_general_linux_1.0.1_amd64.tar.gz
+tar -zxvf troop_general_linux_1.0.1_amd64.tar.gz
+cd troop_general_linux_1.0.1_amd64
 ./install.sh
 
 # 修改配置文件
@@ -54,9 +54,9 @@ service troop-generald restart
 
 #### 6.安装Client服务(命令行工具)
 ```
-wget https://github.com/kurolz/troop-service/raw/master/troop_client_linux_1.0.0_amd64.tar.gz
-tar -zxvf troop_client_linux_1.0.0_amd64.tar.gz
-cd troop_client_linux_1.0.0_amd64
+wget https://github.com/kurolz/troop-service/raw/master/troop_client_linux_1.0.1_amd64.tar.gz
+tar -zxvf troop_client_linux_1.0.1_amd64.tar.gz
+cd troop_client_linux_1.0.1_amd64
 ./install.sh
 
 # 修改配置文件
@@ -67,9 +67,9 @@ cd troop_client_linux_1.0.0_amd64
 
 ##### Linux
 ```
-wget https://github.com/kurolz/troop-service/raw/master/troop_scout_linux_1.0.0_amd64.tar.gz
-tar -zxvf troop_scout_linux_1.0.0_amd64.tar.gz
-cd troop_scout_linux_1.0.0_amd64
+wget https://github.com/kurolz/troop-service/raw/master/troop_scout_linux_1.0.1_amd64.tar.gz
+tar -zxvf troop_scout_linux_1.0.1_amd64.tar.gz
+cd troop_scout_linux_1.0.1_amd64
 ./install.sh
 
 # 修改配置文件
