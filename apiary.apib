@@ -316,7 +316,9 @@ Troop是基于Golang编写的运维自动化底层基础设施，一套完整的
                 "task": [
                     {
                         "name": "cmd /c",
-                        "args": "ping 127.0.0.1"
+                        "args": "ping 127.0.0.1",
+                        "envs": [{"key": "my_env", "value": "env_value"}],
+                        "dir": "/opt"
                     }
                 ],
                 "target": "*",
@@ -360,7 +362,7 @@ Troop是基于Golang编写的运维自动化底层基础设施，一套完整的
 
             {
                 "file_name": "my_script.sh",
-                "file": "(file_byte)",
+                "file": "$文件内容的uint8数据",
                 "dest": "/tmp/",
                 "cover": false,
                 "target": "*",
@@ -451,8 +453,8 @@ Troop是基于Golang编写的运维自动化底层基础设施，一套完整的
             {
                 "plugin": "$plugin_name",
                 "action": "",
-                "config_byte": "$file_bytes",
-                "config_name": "$file_name",
+                "config_byte": "$文件内容的uint8数据",
+                "config_name": "$文件名",
                 "args": "",
                 "no_check": false,
                 "target": "server-1",
