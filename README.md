@@ -282,3 +282,6 @@ troop scout.update '*' http://example.com/scout.tar.gz
 - 优化Scout当RabbitMQ连接中断，队列未自动删除，导致RESOURCE_LOCKED的问题。
 - 增加通过命令行工具获取主机列表时同时显示主机名、Scout版本、IP、安装的插件
 
+###### 2020.6 `v1.0.2`
+- 修复并发导致rabbitmq阻塞问题。
+- 修复因网络波动重连失败MQ的问题。
